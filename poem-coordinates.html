@@ -116,8 +116,6 @@
 
 			CY[0] = "G 47° 15°"
 			CY[1] = "W 48° 16°"
-			CY[2] = "SL3 47°23' 15°28'"
-			CY[3] = "SL3 47°23'17 15°28'54"
 
 			function L0()
 			{
@@ -609,8 +607,6 @@
 
 			function START()
 			{
-				document.getElementById('T5').value = "THE LEFT AREA SHOWS ALL NEEDED FIRST CHARACTERS, FOR EACH LINE.\nTHEY ARE CONVERTED TROUGH QWERT, SMS, ABC1-0 INTO NUMBERS.\nYOU CAN SEE IT ON THIS NUMBER IN THE RIGHT BOX.\nIN THE 2ND BOX ON THE RIGHT YOU CAN SEE THE NUMBERS OF BOX ONE 90° ROTATED.\nYOU CAN SWITCH BETWEEN ONE AND TWO ON THE RIGHT TROUGH DMX (X-Y|). THE THIRD BOX ON THE RIGHT COMBINES THE FOUR FORMAT FIELDS WITH THE NUMBERS.";
-
 				document.getElementById('T0').value = VER;
 
 				L0();
@@ -621,7 +617,7 @@
 				L20();
 				L2();
 
-				document.getElementById('T9').value = "Erdradius = 6378.388 km\n\nErdumfang = 6378.388 * 2 * PI\nErdumfang = 40076.593 km\n\nBreitenwinkel/Distanz Großkreise linear:\nB 1°=111.2km\nB 1'=1.85km\nB 1''=0.0308km\nB 1''=30.8m\nB 0.01''=31cm\nB 0.001''=3.1cm\n\nLängenwinkel/Distanz breitenabhängig:\n\nWIEN Mitte Längenwinkel:\nL 1° ca. 74.3km\n\nGRAZ Mitte Längenwinkel:\nL 1° ca. 76km\n\nAUSTRIA Ungefähre Längengrad / Distanz\nL 1'=\nL 1'' ca. 21.1m\nL 0.01'' ca. 21.1cm\nL 0.001'' ca. 2.1cm";
+				document.getElementById('T9').value = "Earthradius = 6378.388 km\n\nCircumference = 6378.388 * 2 * PI\nCircumference = 40076.593 km\nL 1° ca. 74.3km";
 			}
 			mC.addEventListener('mousemove', function(evt) { GM(evt); }, false);
 
