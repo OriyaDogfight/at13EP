@@ -1,0 +1,630 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		
+		<title>Poem-Vertical-Coordinates</title>
+
+		<style type="text/css">
+			.IN {background-color: #ffa; font-family:Courier; font-size:12px; color:black}
+			.OT {background-color: #fff; font-family:Courier; font-size:12px; color:black}
+		</style>
+	</head>
+
+	<body onload="START()">
+	
+		<select id="S2" class="IN" size="2" onclick="L2()" onkeyup="L2()"></select>
+
+		<table border="0" class="OT">
+			<tr>
+				<td><select id="S1" class="IN" size="3" onclick="L2()" onkeyup="L2()"></select></td>
+
+				<td>(X-Y|)=</td>
+
+				<td><input id="CB1" type="checkbox" onclick="L2()" value="XY" checked="true"></td>
+
+				<td>D=[°] M=['] S=['']</td><td>ms=[,00'']</td>
+
+				<td><select id="S4" class="IN" size="2" onclick="L22()" onkeyup="L22()"></select></td>
+				<td><select id="S3" class="IN" size="2" onclick="L15()" onkeyup="L15()"></select></td>
+
+				<td> </td><td><input id="TF2" class="IN" size="10" value="47°" onkeyup="L2()"></td>
+				<td>_</td><td><input id="TF3" class="IN" size="10" value="" onkeyup="L2()"></td>
+				<td>_</td><td><input id="TF4" class="IN" size="10" value="15°" onkeyup="L2()"></td>
+				<td>_</td><td><input id="TF5" class="IN" size="10" value="" onkeyup="L2()"></td>
+
+				<td>DMS(X-Y|)=</td>
+
+				<td><input id="CB2" type="checkbox" onclick="L2()" value="VH" checked="true"></td>
+
+				<td><input id="B1" onclick="L19()" type="button" value="-BL-"></td>
+			</tr>
+		</table>
+
+		<table border="1" class="OT">
+			<tr>
+				<td>Locations(°)(')('') <select id="S0" class="IN" size="1" onclick="L20()" onkeyup="L20()"></select></td>
+				<td>Coordinates(°)(')('')</td>
+				<td>Colored Perls a=<input id="TF1" class="IN" size="4" value="6" onkeyup="L2()"></td>
+				<td>Coordinates(..NR)</td>
+				<td>Vertical-Coordinates</td>
+				<td>Information</td>
+			</tr>
+			<tr>
+				<td><textarea id="T0" class="IN" cols="60" rows="27" onkeyup="L20()" onchange="L20()"></textarea></td>
+
+				<td><textarea id="T1" class="IN" cols="24" rows="27" onkeyup="L2()" onchange="L2()"></textarea></td>
+
+				<td><canvas id="mC" width="200" height="390"></canvas></td>
+
+				<td><textarea id="T2" class="OT" cols="14" rows="27"></textarea></td>
+				<td><textarea id="T3" class="OT" cols="40" rows="27"></textarea></td>
+
+				<td><textarea id="T9" class="OT" cols="40" rows="27"></textarea></td>
+			</tr>
+		</table>
+
+		<table border="1" class="OT">
+			<tr>
+				<td>1st Poem Letters</td>
+				<td>Composition</td>
+				<td>X -> 0°</td>
+				<td>Y | 90°</td>
+				<td>Use Format</td>
+			</tr>
+			<tr>
+				<td><textarea id="T4" class="OT" cols="50" rows="27"></textarea></td>
+				<td><textarea id="T5" class="IN" cols="100" rows="27" onkeyup="L2()" onchange="L2()"></textarea></td>
+				<td><textarea id="T6" class="OT" cols="40" rows="27"></textarea></td>
+				<td><textarea id="T7" class="OT" cols="40" rows="27"></textarea></td>
+				<td><textarea id="T8" class="OT" cols="30" rows="27"></textarea></td>
+			</tr>
+		</table>
+
+		<script type='text/javascript'>
+
+                        var P1 = document.getElementById('mC');
+                        var P2 = mC.getContext('2d');
+
+			var PL = new Array();
+
+			PL[0] = "ALPHABET: (A)UBERGINE=1=BLACK (B)LUMENKOHL=2=LIGHTGRAY (E)RBSE=3=LIGHTGREEN (G)URKE=4=GREEN (K)IRSCHE=5=DARKRED (M)AIS=6=YELLOW (O)RANGE=7=ORANGE (R)OTKOHL=8=PURPLE (T)OMATE=9=RED (Z)WETSCHKE=0=BLUE";
+			PL[1] = "SPEKTRUM: (B)LUMENKOHL=1=LIGHTGRAY (K)IRSCHE=2=DARKRED (T)OMATE=3=RED (O)RANGE=4=ORANGE (M)AIS=5=YELLOW (G)URKE=6=GREEN (E)RBSE=7=LIGHTGREEN (Z)WETSCHKE=8=BLUE (R)OTKOHL=9=PURPLE (A)AUBERGINE=0=BLACK";
+
+			var CD = new Array();
+
+			CD[0] = "QWERT: 0=PÄÖÜ 1=QAY 2=WSX 3=EDC 4=RFV 5=TGB 6=ZHN 7=UJM 8=IK 9=OL";
+			CD[2] = "ABC10: 0=JT 1=AKU 2=BLV 3=CMW 4=DNX 5=EOY 6=FPZ 7=GQ 8=HR 9=IS";
+			CD[1] = "SMS: 0=O 1=A 2=BC 3=DEF 4=GHI 5=JKL 6=MN 7=PQRS 8=TUV 9=WXYZ";
+
+			var CO = new Array();
+
+			CO[0] = ",SSS";
+			CO[1] = "S,SSS";
+			CO[2] = "SS,SSS";
+			CO[3] = ",mS";
+			CO[4] = "S,mS";
+			CO[5] = "SS,mS";
+			CO[6] = "SS";
+			CO[7] = "MM SS";
+			CO[8] = "DD MM";
+			CO[9] = "DDD MM";
+			CO[10] = "DD MM SS";
+			CO[11] = "DDD MM SS";
+
+			var CY = new Array();
+
+			CY[0] = "G 47° 15°"
+			CY[1] = "W 48° 16°"
+			CY[2] = "SL3 47°23' 15°28'"
+			CY[3] = "SL3 47°23'17 15°28'54"
+
+			function L0()
+			{
+				var L = "";
+
+				for(var i = 0; i < 99; i++)
+				{
+					L += L1(i);
+				}
+				document.getElementById('S0').innerHTML = L;
+				document.getElementById('S0').selectedIndex = 0;
+
+				var U = "";
+
+				for(var i = 0; i < CO.length; i++)
+				{
+					U += L1(CO[i]);
+				}
+				document.getElementById('S3').innerHTML = U;
+				document.getElementById('S3').selectedIndex = 0;
+
+				var R = "";
+
+				for(var i = 0; i < CD.length; i++)
+				{
+					R += L1(CD[i]);
+				}
+				document.getElementById('S1').innerHTML = R;
+				document.getElementById('S1').selectedIndex = 0;
+
+                                var F = "";
+
+                                for(var i = 0; i < PL.length; i++)
+                                {
+                                        F += L1(PL[i]);
+                                }
+				document.getElementById('S2').innerHTML = F;
+				document.getElementById('S2').selectedIndex = 0;
+
+				var C = "";
+
+                                for(var i = 0; i < CY.length; i++)
+                                {
+                                        C += L1(CY[i]);
+                                }
+				document.getElementById('S4').innerHTML = C;
+				document.getElementById('S4').selectedIndex = 3;
+
+				L22();
+			}
+
+			function L1(R) { return "<option value=\"" + R + "\">" + R + "</option>\n"; }
+
+			function L2()
+			{
+				var S = document.getElementById('S1').value;
+				var G = document.getElementById('T1').value;
+				var I = document.getElementById('T5').value;
+
+				G = G.replace(/°/g, "");
+				G = G.replace(/'/g, "");
+
+				var F = L3(G);
+
+				document.getElementById('T2').value= F;
+
+				var R = F;
+
+				if(document.getElementById('CB1').checked)
+				{
+					R =  L5(F);
+				}
+				document.getElementById('T3').value= R;
+
+				L6();
+
+				var Z = L11(S, R);
+
+				var U = L12(Z, I, 8);
+
+				document.getElementById('T4').value= U;
+
+				L13();
+
+				L16();
+			}
+
+			function L3(T)
+			{
+				var t = T.split("\n");
+
+				var X = L4(T);
+
+				var R = "";
+
+				for(var i = 0; i < t.length; i++)
+				{
+					while(t[i].length < X) { t[i]= "0" + t[i]; }
+
+					R += t[i] + "\n";
+				}
+				return R.replace(/\n$/g, "");
+			}
+
+			function L4(T)
+			{
+				var t = T.split("\n");
+
+				var X = 0;
+
+				for(var i = 0; i < t.length; i++)
+				{
+					if(t[i].length > X) { X = t[i].length; }
+				}
+				return X;
+			}
+
+			function L5(T)
+			{
+				var t = T.split("\n");
+
+				var X = t[0].length;
+
+				var Z = new Array();
+
+				var R = "";
+
+				for(var i = 0; i < t.length; i++)
+				{
+					for(var n = 0; n < X; n++)
+					{
+						if(i == 0) { Z[n] = ""; }
+
+						Z[n] += t[i].charAt(n);
+					}
+				}
+				for(var i = 0; i < Z.length; i++)
+				{
+					R += Z[i] + "\n";
+				}
+				return R.replace(/\n$/g, "");
+			}
+
+			function L6()
+			{
+				var F = document.getElementById('S2').value.split(": ")[1];
+				var N = document.getElementById('T2').value;
+
+				var a = parseInt(document.getElementById('TF1').value);
+
+				L10(0, 0, 0, P1.width, P1.height, "WHITE");
+
+				L7(F, N, a, a - 1);
+			}
+
+			function L7(F, N, a, r)
+			{
+				var f = F.split(" ");
+
+				var C = "";
+				var Z = "";
+
+				var n = N.split("\n");
+
+				for(var y = 0; y < n.length; y++)
+				{
+					for(var x = 0; x < n[y].length; x++)
+					{
+						Z = n[y].charAt(x);
+
+						for(var i = 0; i < f.length; i++)
+						{
+							if(f[i].indexOf(Z) >= 0)
+							{
+								C = f[Z].split("=")[2];
+							}
+						}
+						L8(C, a + x * a * 2, a + y * a * 2, r);
+					}
+				}
+			}
+
+			function L8(C, X0, Y0, R)
+                        {
+			                        	P2.fillStyle = C;
+                                P2.strokeStyle = C;
+
+                                P2.beginPath();
+                                P2.arc(X0, Y0, R, Math.PI * 2, false);
+                                P2.stroke();
+				P2.fill();
+                                P2.closePath();
+                        }
+
+			function L9(R)
+			{
+				R = R.replace(/,/g, "");
+				R = R.replace(/:/g, "");
+				R = R.replace(/;/g, "");
+				R = R.replace(/\.-/g, "");
+				R = R.replace(/\./g, "");
+
+				return R;
+			}
+
+			function L10(F, X1, Y1, X2, Y2, C)
+			{
+				P2.strokeStyle = C;
+				P2.fillStyle = C;
+
+				P2.beginPath();
+
+				if(F == 0) { P2.fillRect(X1, Y1, X2, Y2); }
+
+				if(F == 1)
+				{
+					P2.moveTo(X1, Y1);
+					P2.lineTo(X2, Y2);
+				}
+				P2.stroke();
+				P2.closePath();
+                        }
+
+			function L11(A, N)
+			{
+				var a = A.split(": ")[1].split(" ");
+
+				var n = N.split("\n");
+
+				var V = 0;
+				var Z = "";
+
+				for(var y = 0; y < n.length; y++)
+				{
+					for(var x = 0; x < n[y].length; x++)
+					{
+						V = parseInt(n[y].charAt(x));
+
+						Z += a[V] + " ";
+					}
+					Z += "\n";
+				}
+				return Z.replace(/\n$/g, "");
+			}
+
+			function L12(G, T, D)
+			{
+				g = G.split("\n");
+				t = T.split("\n");
+
+				var U = new Array();
+
+				var R = "";
+				var X = 0;
+
+				for(var y = 0; y < g.length; y++)
+				{
+					if(y >= t.length) { t[y] = ""; }
+
+					X = t[y].replace(/ $/g, "").split(" ").length;
+
+					if(t[y].length == 0) { X = 0; }
+
+					U = g[y].replace(/ $/g, "").split(" ");
+
+					for(var a = X; a < U.length && a < X + D; a++)
+					{
+						R += U[a] + " ";
+					}
+					R += "\n";
+				}
+				return R.replace(/\n$/g, "");
+			}
+
+			function L13()
+			{
+				var A = document.getElementById('S1').value;
+				var T = document.getElementById('T5').value;
+
+				var R = L14(A, T);
+
+				document.getElementById('T6').value = R;
+
+				var F = L5(R);
+
+				document.getElementById('T7').value = F;
+			}
+
+			function L14(A, T)
+			{
+				var a = A.split(": ")[1].split(" ");
+
+				var t = T.split("\n");
+
+				var W = new Array();
+
+				var C = "";
+				var R = "";
+
+				var B = true;
+
+				for(var i = 0; T.length > 0 && i < t.length; i++)
+				{
+					W = t[i].split(" ");
+
+					for(var n = 0; n < W.length; n++)
+					{
+						C = W[n].charAt(0).toUpperCase();
+
+						B = true;
+
+						for(var d = 0; B && W[n].length > 0 && d < a.length; d++)
+						{
+							if(a[d].indexOf(C) >= 0)
+							{
+								R += a[d].split("=")[0];
+
+								B = false;
+							}
+						}
+					}
+					R += "\n";
+				}
+				return R;
+			}
+
+			function L15()
+			{
+				var C = document.getElementById('S3').value;
+
+				document.getElementById('TF3').value = C;
+				document.getElementById('TF5').value = C;
+
+				L2();
+			}
+
+			function L16()
+			{
+				var F = new Array();
+
+				F[0] = document.getElementById('TF2').value;
+				F[1] = document.getElementById('TF3').value;
+				F[2] = document.getElementById('TF4').value;
+				F[3] = document.getElementById('TF5').value;
+
+				var t6 = document.getElementById('T6').value;
+				var t7 = document.getElementById('T7').value;
+
+				var cb2 = document.getElementById('CB2').checked;
+
+				var T = t6;
+
+				if(cb2) { T = t7; }
+
+				var R = L17(F, T);
+
+				document.getElementById('T8').value = R;
+			}
+
+			function L17(F, T)
+			{
+				var t = T.split("\n");
+
+				var U = "";
+				var C = "";
+
+				var D = 0;
+
+				var W = new Array();
+
+				for(var i = 0; i < t.length; i++)
+				{
+					D = 0;
+
+					for(var m = 0; m < 2; m++)
+					{
+						if(m == 0) { U += F[0]; W = F[1].split(" "); }
+						if(m == 1) { U += F[2]; W = F[3].split(" "); }
+
+						for(var n = 0; n < W.length; n++)
+						{
+							for(var x = 0; x < W[n].length; x++)
+							{
+								C = W[n].charAt(x);
+
+								if(C.indexOf(",") >= 0)
+								{
+									U += ",";
+								}
+								else
+								{
+									U += t[i].substring(D, D + 1);
+									D++;
+								}
+							}
+							U += L18(C);
+						}
+						U += " ";
+					}
+					U += "\n";
+				}
+				return U;
+			}
+
+			function L18(T)
+			{
+				var R = "";
+
+				if(T.indexOf("D") >= 0) { R = "°"; }
+				if(T.indexOf("M") >= 0) { R = "'"; }
+				if(T.indexOf("S") >= 0) { R = "''"; }
+
+				return R;
+			}
+
+			function L19()
+			{
+				document.getElementById('TF2').value = "";
+				document.getElementById('TF4').value = "";
+
+				L2();
+			}
+
+			function L20()
+			{
+				var Y = parseInt(document.getElementById('S0').value);
+
+				var T = document.getElementById('T0').value;
+
+				var t = T.split("\n\n");
+
+				if(Y < t.length)
+				{
+					document.getElementById('T1').value = L21(t[Y]);
+				}
+				L2();
+			}
+
+			function L21(T)
+			{
+				T = T.replace(/\"/g, "''");
+
+				var N = "0123456789°'\n ";
+
+				var C = "";
+				var R = "";
+
+				var B = true;
+
+				for(var i = 0; i < T.length; i++)
+				{
+					C = T.charAt(i);
+
+					if(B && N.indexOf(C) >= 0) { R += C; } else { B = false; }
+
+					if(C.indexOf("\n") == 0)
+					{
+						R += "\n";
+						B = true;
+					}
+				}
+				return R.replace(/^\n/g, "").replace(/ /g, "").replace(/\n\n/g, "\n");
+			}
+
+			function L22()
+			{
+				var T = document.getElementById('S4').value;
+
+				var t = T.split(" ");
+
+				document.getElementById('TF2').value = t[1];
+				document.getElementById('TF4').value = t[2];
+
+				L2();
+			}
+
+                        function GM(evt)
+                        {
+                                var r = P1.getBoundingClientRect();
+
+                                var x = parseInt(evt.clientX - r.left);
+                                var y = parseInt(evt.clientY - r.top);
+
+				L6();
+
+				L10(1, 0, y, P1.width, y, "BROWN");
+				L10(1, x, 0, x, P1.height, "BROWN");
+                        }
+
+			function START()
+			{
+				document.getElementById('T5').value = "THE LEFT AREA SHOWS ALL NEEDED FIRST CHARACTERS, FOR EACH LINE.\nTHEY ARE CONVERTED TROUGH QWERT, SMS, ABC1-0 INTO NUMBERS.\nYOU CAN SEE IT ON THIS NUMBER IN THE RIGHT BOX.\nIN THE 2ND BOX ON THE RIGHT YOU CAN SEE THE NUMBERS OF BOX ONE 90° ROTATED.\nYOU CAN SWITCH BETWEEN ONE AND TWO ON THE RIGHT TROUGH DMX (X-Y|). THE THIRD BOX ON THE RIGHT COMBINES THE FOUR FORMAT FIELDS WITH THE NUMBERS.";
+
+				document.getElementById('T0').value = VER;
+
+				L0();
+				L15();
+
+				document.getElementById('S0').selectedIndex = 1;
+
+				L20();
+				L2();
+
+				document.getElementById('T9').value = "Erdradius = 6378.388 km\n\nErdumfang = 6378.388 * 2 * PI\nErdumfang = 40076.593 km\n\nBreitenwinkel/Distanz Großkreise linear:\nB 1°=111.2km\nB 1'=1.85km\nB 1''=0.0308km\nB 1''=30.8m\nB 0.01''=31cm\nB 0.001''=3.1cm\n\nLängenwinkel/Distanz breitenabhängig:\n\nWIEN Mitte Längenwinkel:\nL 1° ca. 74.3km\n\nGRAZ Mitte Längenwinkel:\nL 1° ca. 76km\n\nAUSTRIA Ungefähre Längengrad / Distanz\nL 1'=\nL 1'' ca. 21.1m\nL 0.01'' ca. 21.1cm\nL 0.001'' ca. 2.1cm";
+			}
+			mC.addEventListener('mousemove', function(evt) { GM(evt); }, false);
+
+		</script>
+	</body>
+</html>
